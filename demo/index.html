@@ -10,6 +10,7 @@
 </head>
 <body>
   <div id="demo"></div>
+  <script src="https://unpkg.com/quicktype-playground@1"></script>
 
   <script type="module">
     import { html, render } from 'lit-html';
@@ -17,6 +18,14 @@
 
     render(
       html`
+
+      <div class="quicktype" data-type-name="Person">
+    {
+      "name": "Bob",
+      "age": 99,
+      "friends": ["Sue", "Vlad"]
+    }
+    </div>
         <jc-json-utils .data=${'{ "thing": "nothing" }'}>
         </jc-json-utils>
       `,

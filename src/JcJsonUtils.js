@@ -24,6 +24,7 @@ export class JcJsonUtils extends LitElement {
         message: data,
       },
     });
+    console.log('data: ', data);
     this.dispatchEvent(event);
   }
 
