@@ -3,8 +3,7 @@ import '../jc-json-utils.js';
 
 render(
   html`
-    <jc-json-utils .data=${'{ "thing": "nothing" }'}>
-    </jc-json-utils>
+    <jc-json-utils .data=${'{"name":"Bob","age":99,"friends":["Sue","Vlad"]}'}> </jc-json-utils>
   `,
-  document.querySelector('#demo')
+  document.querySelector('#demo'),
 );

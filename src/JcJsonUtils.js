@@ -1,12 +1,37 @@
 import { html, css, LitElement } from 'lit-element';
 import { quicktype } from 'quicktype';
+// import '@granite-elements/ace-widget';
 
 export class JcJsonUtils extends LitElement {
   static get styles() {
     return css`
       :host {
         display: block;
-        padding: 25px;
+        padding: 0 20px;
+        height: 100%;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
+          sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+      }
+      .editor {
+        height: 80%;
+      }
+      .title {
+        margin-top: 0;
+      }
+      .action-button {
+        width: 80%;
+        display: block;
+        margin: 0 auto;
+        background-color: rgb(59, 139, 235);
+        color: #ffffff;
+        padding: 10px;
+        margin-top: 25px;
+        border: 0;
+        box-shadow: none;
+        cursor: pointer;
+      }
+      .action-button:hover {
+        background-color: rgba(59, 139, 235, 0.9);
       }
     `;
   }
@@ -24,13 +49,6 @@ export class JcJsonUtils extends LitElement {
   }
 
   async __transformJson() {
-    const data = JSON.parse(this.data);
-    const code = JSON.stringify({
-      name: 'Bob',
-      age: 99,
-      friends: ['Sue', 'Vlad'],
-    });
-    data.id = 1;
     let quicktypeResponse = '';
     try {
       quicktypeResponse = await quicktype({
@@ -39,7 +57,7 @@ export class JcJsonUtils extends LitElement {
           {
             kind: 'json',
             name: 'Person',
-            samples: [code],
+            samples: [this.data],
           },
         ],
         rendererOptions: 'Rust',
@@ -52,10 +70,11 @@ export class JcJsonUtils extends LitElement {
 
   render() {
     return html`
+      <h1 class="title">Quicktype</h1>
       <pre>${this.data}</pre>
-      <div>yooo</div>
       <div style="white-space: pre-line">${this.generatedTypes}</div>
-      <button @click=${this.__transformJson}>Transform</button>
+      <button class="action-button" @click=${this.__transformJson}>Generate type</button>
+      <button class="action-button" @click=${this.__copyToClipBoard}>Copy to clipboard</button>
     `;
   }
 }
