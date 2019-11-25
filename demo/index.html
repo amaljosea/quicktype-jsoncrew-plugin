@@ -11,17 +11,5 @@
 <body>
   <div id="demo"></div>
 
-  <script type="module">
-    import { html, render } from 'lit-html';
-    import '../jc-json-utils.js';
-
-    render(
-      html`
-        <jc-json-utils .data=${'{ "thing": "nothing" }'}>
-        </jc-json-utils>
-      `,
-      document.querySelector('#demo')
-    );
-  </script>
-</body>
+  <script type="module" src="./index.js"></script>
 </html>

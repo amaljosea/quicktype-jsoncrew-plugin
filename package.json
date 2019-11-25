@@ -7,7 +7,7 @@
   "main": "dist/jc-json-utils.js",
   "module": "dist/jc-json-utils.js",
   "scripts": {
-    "start": "es-dev-server --app-index demo/index.html --node-resolve --open --watch",
+    "start": "webpack-dev-server --mode development --open",
     "start:compatibility": "es-dev-server --app-index demo/index.html --compatibility all --node-resolve --open --watch",
     "lint:eslint": "eslint --ext .js,.html . --ignore-path .gitignore",
     "format:eslint": "eslint --ext .js,.html . --fix --ignore-path .gitignore",
@@ -31,10 +31,16 @@
     "src"
   ],
   "dependencies": {
+    "lit-element": "^2.0.1",
     "lit-html": "^1.0.0",
-    "lit-element": "^2.0.1"
+    "quicktype": "^13.0.10"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
     "@open-wc/building-rollup": "^0.9.33",
     "@open-wc/eslint-config": "^1.0.0",
     "@open-wc/prettier-config": "^0.1.10",
@@ -48,7 +54,11 @@
     "np": "^5.1.0",
     "rimraf": "^3.0.0",
     "rollup": "^1.22.0",
-    "webpack-merge": "^4.1.5"
+    "webpack-merge": "^4.1.5",
+    "webpack": "^4.39.2",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.8.0",
+    "html-webpack-plugin": "^3.2.0"
   },
   "eslintConfig": {
     "extends": [
