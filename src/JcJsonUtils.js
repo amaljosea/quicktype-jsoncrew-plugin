@@ -3,38 +3,43 @@ import { quicktype } from 'quicktype';
 // import '@granite-elements/ace-widget';
 
 const LANGUAGE_MODE = {
-  "C#": "text/x-csharp",
-  "JSON Schema": "application/ld+json",
-  JavaScript: "text/javascript",
-  TypeScript: "text/typescript",
-  "Objective-C": "text/x-objectivec",
-  Java: "text/x-java",
-  Flow: "text/javascript",
-  JSON: "application/ld+json",
-  Swift: "text/x-swift",
-  Ruby: "text/x-ruby",
-  "C++": "text/x-c++hdr",
-  Elm: "text/x-elm",
-  Go: "text/x-go",
-  Kotlin: "text/x-kotlin",
-  Rust: "text/x-c"
+  TypeScript: 'text/typescript',
+  'C#': 'text/x-csharp',
+  'JSON Schema': 'application/ld+json',
+  JavaScript: 'text/javascript',
+  'Objective-C': 'text/x-objectivec',
+  Java: 'text/x-java',
+  Flow: 'text/javascript',
+  JSON: 'application/ld+json',
+  Swift: 'text/x-swift',
+  Ruby: 'text/x-ruby',
+  'C++': 'text/x-c++hdr',
+  Elm: 'text/x-elm',
+  Go: 'text/x-go',
+  Kotlin: 'text/x-kotlin',
+  Rust: 'text/x-c',
 };
 
 const LANGUAGE_OPTIONS = {
-  TypeScript: { "just-types": true },
-  Ruby: { "just-types": true },
-  Elm: { "just-types": true },
-  Go: { "just-types": true },
-  "Objective-C": { "just-types": true, features: "interface" },
-  Java: { "just-types": true },
-  Flow: { "just-types": true },
-  "C++": { "just-types": true },
-  Rust: { "just-types": true },
-  "C#": { features: "attributes-only" },
-  Swift: { initializers: false }
+  TypeScript: { 'just-types': true },
+  Ruby: { 'just-types': true },
+  Elm: { 'just-types': true },
+  Go: { 'just-types': true },
+  'Objective-C': { 'just-types': true, features: 'interface' },
+  Java: { 'just-types': true },
+  Flow: { 'just-types': true },
+  'C++': { 'just-types': true },
+  Rust: { 'just-types': true },
+  'C#': { features: 'attributes-only' },
+  Swift: { initializers: false },
 };
 
-const dropDown =Object.keys(LANGUAGE_MODE).map((language)=>html`<option value="${language}">${language}</option>`)
+const dropDown = Object.keys(LANGUAGE_MODE).map(
+  language =>
+    html`
+      <option value="${language}">${language}</option>
+    `,
+);
 
 export class JcJsonUtils extends LitElement {
   static get styles() {
@@ -62,7 +67,7 @@ export class JcJsonUtils extends LitElement {
         margin-top: 25px;
         border: 0;
         box-shadow: none;
-        cursor: pointer;
+        border-left: 10px solid #3b8beb;
       }
       .action-select {
         width: 80%;
@@ -77,13 +82,29 @@ export class JcJsonUtils extends LitElement {
       .action-button:hover {
         background-color: rgba(59, 139, 235, 0.9);
       }
+      .type-card {
+        white-space: pre-line;
+        display: block;
+        box-shadow: none;
+        margin: 25px auto 0px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: rgb(59, 139, 235);
+        border-image: initial;
+        padding: 10px;
+      }
     `;
   }
 
   constructor() {
     super();
     this.generatedType = '';
-    this.selectedLanguage= 'TypeScript';
+    this.selectedLanguage = 'TypeScript';
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.getTypeFromJson();
   }
 
   static get properties() {
@@ -94,43 +115,48 @@ export class JcJsonUtils extends LitElement {
     };
   }
 
-  async __transformJson() {
+  async getTypeFromJson() {
     let quicktypeResponse = '';
     try {
       quicktypeResponse = await quicktype({
-        lang: 'Rust',
+        lang: this.selectedLanguage,
         sources: [
           {
             kind: 'json',
-            name: 'Person',
+            name: 'TopLevel',
             samples: [this.data],
           },
         ],
-        rendererOptions: 'Rust',
+        rendererOptions: LANGUAGE_OPTIONS[this.selectedLanguage],
       });
     } catch (error) {
-      console.log('error===>', error);
+      this.generatedType = 'Error!';
     }
     this.generatedType = quicktypeResponse.lines.join('\n');
   }
 
   onLanguageChange(event) {
-    console.log("event==>",event)
     this.selectedLanguage = event.target.value;
+    this.getTypeFromJson();
+  }
+
+  copyToClipBoard() {
+    navigator.clipboard.writeText(this.generatedType);
   }
 
   render() {
-    console.log("selectedLanguage",this.selectedLanguage)
     return html`
       <h1 class="title">Quicktype</h1>
-      <h1 class="title">${this.selectedLanguage}</h1>
-      <pre>${this.data}</pre>
-      <select selected=${this.selectedLanguage} @change=${this.onLanguageChange} class="action-select">
+      <h2 class="title">${this.selectedLanguage}</h2>
+      <select
+        selected=${this.selectedLanguage}
+        @change=${this.onLanguageChange}
+        class="action-select"
+      >
         ${dropDown}
       </select>
-      <div style="white-space: pre-line">${this.generatedType}</div>
-      <button class="action-button" @click=${this.__transformJson}>Generate type</button>
-      <button class="action-button" @click=${this.__copyToClipBoard}>Copy to clipboard</button>
+      <div class="type-card">${this.generatedType ? this.generatedType : 'Loading...'}</div>
+      <button class="action-button" @click=${this.copyToClipBoard}>Copy to clipboard</button>
     `;
   }
 }
