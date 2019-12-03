@@ -1,12 +1,13 @@
 {
-  "name": "@agney/jc-json-utils",
-  "version": "0.0.6",
-  "description": "A JSON utils test file",
-  "author": "Agney Menon <agney@outlook.in>",
+  "name": "quicktype-jsoncrew-plugin",
+  "version": "0.0.3",
+  "description": "generate type",
+  "author": "Amal Jose <amaljoseami@gmail.com>",
   "license": "MIT",
-  "main": "./index.html",
-  "module": "./index.html",
+  "main": "examples/dist/bundle.js",
+  "module": "examples/dist/bundle.js",
   "scripts": {
+    "buildw": "webpack --mode production",
     "start": "webpack-dev-server --mode development --open",
     "start:compatibility": "es-dev-server --app-index demo/index.html --compatibility all --node-resolve --open --watch",
     "lint:eslint": "eslint --ext .js,.html . --ignore-path .gitignore",
@@ -63,8 +64,9 @@
     "rimraf": "^3.0.0",
     "rollup": "^1.22.0",
     "rollup-plugin-babel": "^3.0.7",
+    "rollup-plugin-node-resolve": "^5.2.0",
     "webpack": "^4.39.2",
-    "webpack-cli": "^3.3.6",
+    "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.8.0",
     "webpack-merge": "^4.1.5"
   },
@@ -86,5 +88,17 @@
       "prettier --write",
       "git add"
     ]
-  }
+  },
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/howareyouami/JsonCrewTypePlugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/howareyouami/JsonCrewTypePlugin/issues"
+  },
+  "homepage": "https://github.com/howareyouami/JsonCrewTypePlugin#readme"
 }
