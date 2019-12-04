@@ -3,7 +3,8 @@ import '../jc-json-utils.js';
 
 render(
   html`
-    <jc-json-utils .data=${'{"name":"Bob","age":99,"friends":["Sue","Vlad"]}'}> </jc-json-utils>
+    <quicktype-jsoncrew-plugin .data=${'{"name":"Bob","age":99,"friends":["Sue","Vlad"]}'}>
+    </quicktype-jsoncrew-plugin>
   `,
   document.querySelector('#demo'),
 );
