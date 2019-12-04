@@ -10,7 +10,6 @@ const LANGUAGE_MODE = {
   'Objective-C': 'text/x-objectivec',
   Java: 'text/x-java',
   Flow: 'text/javascript',
-  JSON: 'application/ld+json',
   Swift: 'text/x-swift',
   Ruby: 'text/x-ruby',
   'C++': 'text/x-c++hdr',
@@ -129,10 +128,12 @@ export class JcJsonUtils extends LitElement {
         ],
         rendererOptions: LANGUAGE_OPTIONS[this.selectedLanguage],
       });
+      if (quicktypeResponse.lines.length) {
+        this.generatedType = quicktypeResponse.lines.join('\n');
+      }
     } catch (error) {
       this.generatedType = 'Error!';
     }
-    this.generatedType = quicktypeResponse.lines.join('\n');
   }
 
   onLanguageChange(event) {
@@ -155,8 +156,17 @@ export class JcJsonUtils extends LitElement {
       >
         ${dropDown}
       </select>
-      <div class="type-card">${this.generatedType ? this.generatedType : 'Loading...'}</div>
-      <button class="action-button" @click=${this.copyToClipBoard}>Copy to clipboard</button>
+      ${!this.data
+        ? html`
+            <p>Give a valid Json and try again</p>
+          `
+        : ''}
+      <div class="type-card">${this.generatedType}</div>
+      ${this.generatedType && this.generatedType !== 'Error!'
+        ? html`
+            <button class="action-button" @click=${this.copyToClipBoard}>Copy to clipboard</button>
+          `
+        : ''}
     `;
   }
 }
