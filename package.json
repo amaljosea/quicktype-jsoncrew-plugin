@@ -1,6 +1,6 @@
 {
   "name": "quicktype-jsoncrew-plugin",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Generate type from JSON",
   "author": "Amal Jose <amaljoseami@gmail.com>",
   "license": "MIT",

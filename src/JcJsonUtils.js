@@ -162,7 +162,7 @@ export class JcJsonUtils extends LitElement {
           `
         : ''}
       <div class="type-card">${this.generatedType}</div>
-      ${this.generatedType && this.generatedType !== 'Error!'
+      ${this.generatedType && this.generatedType !== 'Error!' && false // need to remove after iframe issue
         ? html`
             <button class="action-button" @click=${this.copyToClipBoard}>Copy to clipboard</button>
           `
