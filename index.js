@@ -1,1 +1,3 @@
-export { OgJsonUtils } from './src/OgJsonUtils.js';
+import { JcJsonUtils } from './src/JcJsonUtils.js';
+
+window.customElements.define('quicktype-jsoncrew-plugin', JcJsonUtils);

@@ -148,7 +148,6 @@ export class JcJsonUtils extends LitElement {
   render() {
     return html`
       <h1 class="title">Quicktype</h1>
-      <h2 class="title">${this.selectedLanguage}</h2>
       <select
         selected=${this.selectedLanguage}
         @change=${this.onLanguageChange}

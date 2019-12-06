@@ -1,5 +1,5 @@
 import { html, render } from 'lit-html';
-import '../jc-json-utils.js';
+import '../index.js';
 
 render(
   html`
